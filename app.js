@@ -17,12 +17,20 @@ app.get('/notes', (req, res) => {
     res.sendFile(__dirname + '/public/notes.html');
   
   })
-app.get('/api/notes', (req, res) => {
+//adding ID
+app.get('/api/notes/:id', (req, res) => {
   notesData = fs.readFileSync("./db/db.json");
   notesData = JSON.parse(notesData);
-  res.json(notesData);
+  res.json(notesData[Number(req.params.id)]);
  
   })
+
+  app.get('/api/notes', (req, res) => {
+    notesData = fs.readFileSync("./db/db.json");
+    notesData = JSON.parse(notesData);
+    res.json(notesData);
+   
+    })
 
 app.post('/api/notes', function (req, res) {
   let newNote = req.body

@@ -17,7 +17,7 @@ app.get('/notes', (req, res) => {
   
   })
 app.get('/api/notes', (req, res) => {
-  notesData = fs.readFileSync("/db/db.json");
+  notesData = fs.readFileSync("./db/db.json");
   notesData = JSON.parse(notesData);
   res.json(notesData);
  
@@ -25,11 +25,16 @@ app.get('/api/notes', (req, res) => {
 
 app.post('/api/notes', function (req, res) {
   let newNote = req.body
-  notesData = fs.readFileSync("/db/db.json");
+  notesData = fs.readFileSync("./db/db.json");
+  notesData = JSON.parse(notesData);
   newNote.id = notesData.length;
   notesData.push(newNote);
-  notesData = JSON.stringify (notesData);
-  fs.writeFile("/db/db.json", notesData);
+  notesData = JSON.stringify(notesData);
+
+  fs.writeFile("./db/db.json", notesData, function(err){
+    //remember to have error handling call back
+    if (err) throw (err);
+  });
   res.json(newNote);
 
     // res.send('Got a POST request')

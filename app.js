@@ -9,10 +9,7 @@ app.use("/assets", express.static("./assets"));
 
 let notesData = [];
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
 
-})
 app.get('/notes', (req, res) => {
     res.sendFile(__dirname + '/public/notes.html');
   
@@ -47,6 +44,11 @@ app.post('/api/notes', function (req, res) {
   res.json(newNote);
 
     // res.send('Got a POST request')
+  })
+
+  app.get('*', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+  
   })
 
 app.listen(port, () => {
